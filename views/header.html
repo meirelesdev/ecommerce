@@ -15,15 +15,15 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/lojahcode/res/site/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/res/site/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/lojahcode/res/site/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/res/site/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/lojahcode/res/site/css/owl.carousel.css">
-    <link rel="stylesheet" href="/lojahcode/res/site/css/style.css">
-    <link rel="stylesheet" href="/lojahcode/res/site/css/responsive.css">
+    <link rel="stylesheet" href="/res/site/owl.carousel.css">
+    <link rel="stylesheet" href="/res/site/css/style.css">
+    <link rel="stylesheet" href="/res/site/css/responsive.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,7 +43,7 @@
                             <li><a href="#"><i class="fa fa-user"></i> Minha Conta</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <li><a href="#"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
-                            <li><a href="/lojahcode/admin/"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="/admin"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="#"><img src="/lojahcode/res/site/img/logo.png"></a></h1>
+                        <h1><a href="/"><img src="/res/site/img/logo.png"></a></h1>
                     </div>
                 </div>
                 
@@ -92,4 +92,25 @@
         </div>
     </div> <!-- End site branding area -->
     
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="#">Produtos</a></li>
+                        <li><a href="#">Carrinho</a></li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
     
