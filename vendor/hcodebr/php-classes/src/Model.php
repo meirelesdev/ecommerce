@@ -1,5 +1,5 @@
 <?php
-
+//ESTUDAR ESTA CLASS MAIS A FUNDO!
 namespace Hcode;
 
 class Model {
