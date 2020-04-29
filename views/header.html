@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/res/site/css/font-awesome.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/res/site/owl.carousel.css">
+    <link rel="stylesheet" href="/res/site/css/owl.carousel.css">
     <link rel="stylesheet" href="/res/site/css/style.css">
     <link rel="stylesheet" href="/res/site/css/responsive.css">
 
