@@ -10,6 +10,7 @@ $app = new Slim();
 
 $app->config('debug', true);
 
+require_once("functions.php");
 require_once("admin-categories.php");
 require_once("admin-products.php");
 require_once("admin-forgot.php");
