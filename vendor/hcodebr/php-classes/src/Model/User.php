@@ -27,8 +27,11 @@ class User extends Model{
 
     }
 
-    public static function checkLogin($inadmin = true){
-
+    public static function verifyLogin($inadmin = true) {
+        
+        // print_r($_SESSION[User::SESSION]['inadmin']);
+        // exit;
+        
         if(
             !isset($_SESSION[User::SESSION])
             ||
@@ -38,6 +41,14 @@ class User extends Model{
             ||
             (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin
         ) {
+            header("Location: /admin/login");
+            exit;
+        }
+    }
+
+    public static function checkLogin($inadmin = true){
+
+        if(verifyLogin($inadmin)) {
             //Não esta logado
             return false;
 
@@ -83,19 +94,11 @@ class User extends Model{
         }
     }
 
-    public static function verifyLogin($inadmin = true) {
-
-        if(User::checkLogin($inadmin)
-        ) {
-            //Usuario não esta logado como administrador
-            header("Location: /admin/login");
-            exit;
-        }
-    }
 
     public static function logout(){
 
         $_SESSION[User::SESSION] = null;
+
     }
 
     public static function listAll(){
