@@ -153,7 +153,7 @@ class Cart extends Model{
             
             return Product::checkList($rows);
     }
-
+//função para configuração com o webservice dos correios, para melhorar ver a documentação da api
     public function setFreight($nrzipcode){
 
         $nrzipcode = str_replace("-", "", $nrzipcode);
