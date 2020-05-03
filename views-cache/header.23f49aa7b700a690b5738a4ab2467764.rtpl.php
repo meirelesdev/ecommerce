@@ -177,7 +177,7 @@ desired effect
               <img src="/res/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               
-              <span class="hidden-xs">{Aqui vai o Usuario logado}</span>
+              <span class="hidden-xs"><?php echo getUserName(); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -185,7 +185,8 @@ desired effect
                 <img src="/res/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  {Aqui vai nome do usuario}
+                  <?php echo getUserName(); ?>
+
                   <small>{Aqui vai o tempo de conta do usuario}</small>
                 </p>
               </li>
@@ -207,7 +208,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="/profile" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="/admin/logout" class="btn btn-default btn-flat">Sign out</a>

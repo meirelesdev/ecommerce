@@ -116,7 +116,7 @@ class Product extends Model {
 
 		$extension = explode('.', $file['name']);
 		$extension = end($extension);
-
+		
 		switch ($extension) {
 
 			case "jpg":
@@ -134,12 +134,7 @@ class Product extends Model {
 
 		}
 
-		$dist = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 
-			"res" . DIRECTORY_SEPARATOR . 
-			"site" . DIRECTORY_SEPARATOR . 
-			"img" . DIRECTORY_SEPARATOR . 
-			"products" . DIRECTORY_SEPARATOR . 
-			$this->getidproduct() . ".jpg";
+		$dist = $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR."res".DIRECTORY_SEPARATOR."site".DIRECTORY_SEPARATOR."img".DIRECTORY_SEPARATOR."products".DIRECTORY_SEPARATOR.$this->getidproduct().".jpg";
 
 		imagejpeg($image, $dist);
 

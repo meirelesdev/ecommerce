@@ -45,7 +45,7 @@
                                         </td>
 
                                         <td class="product-thumbnail">
-                                            <a href="/products/{$value.desurl}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/res/site/img/product-thumb-2.jpg"></a>
+                                            <a href="/products/{$value.desurl}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/res/site/img/products/{$value.idproduct}.jpg"></a>
                                         </td>
 
                                         <td class="product-name">
@@ -101,12 +101,20 @@
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
+                                                {if="$cart.vlsubtotal > 0"}
                                                 <td>R$ {function="formatPrice($cart.vlfreight)"}{if="$cart.nrdays > 0"} <small>prazo de {$cart.nrdays} dia(s)</small>{/if} </td>
+                                                {else}
+                                                <td>R$ 0,00 <small>prazo de 0 dia(s)</small> </td>
+                                                {/if}
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Total</th>
+                                                {if="$cart.vlsubtotal > 0"}
                                                 <td><strong><span class="amount">R$ {function="formatPrice($cart.vltotal)"}</span></strong> </td>
+                                                {else}
+                                                <td><strong><span class="amount">R$ 0,00</span></strong> </td>
+                                                {/if}
                                             </tr>
                                         </tbody>
                                     </table>

@@ -49,7 +49,7 @@
                                         </td>
 
                                         <td class="product-thumbnail">
-                                            <a href="/products/<?php echo htmlspecialchars( $value1["desurl"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/res/site/img/product-thumb-2.jpg"></a>
+                                            <a href="/products/<?php echo htmlspecialchars( $value1["desurl"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/res/site/img/products/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg"></a>
                                         </td>
 
                                         <td class="product-name">
@@ -106,12 +106,26 @@
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
+                                                <?php if( $cart["vlsubtotal"] > 0 ){ ?>
+
                                                 <td>R$ <?php echo formatPrice($cart["vlfreight"]); ?><?php if( $cart["nrdays"] > 0 ){ ?> <small>prazo de <?php echo htmlspecialchars( $cart["nrdays"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dia(s)</small><?php } ?> </td>
+                                                <?php }else{ ?>
+
+                                                <td>R$ 0,00 <small>prazo de 0 dia(s)</small> </td>
+                                                <?php } ?>
+
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Total</th>
+                                                <?php if( $cart["vlsubtotal"] > 0 ){ ?>
+
                                                 <td><strong><span class="amount">R$ <?php echo formatPrice($cart["vltotal"]); ?></span></strong> </td>
+                                                <?php }else{ ?>
+
+                                                <td><strong><span class="amount">R$ 0,00</span></strong> </td>
+                                                <?php } ?>
+
                                             </tr>
                                         </tbody>
                                     </table>

@@ -162,8 +162,9 @@ class Cart extends Model{
         
        if($totals['vlheight'] < 2) $totals['vlheight'] = 2;
        if($totals['vllength'] < 16) $totals['vllength'] = 16;
-        // print_r($totals);
-        // exit;
+       
+       // ESTA PARTE DO CODIGO PRECISA SER MELHORADO PARA COMERCIALIZAÇÃO,
+        // POIS OS LIMITES DE PESO E VALORES INFOMADOS PODEM GERAR ERRO NO CARRINHO DE COMPRA
         if( $totals['nrqtd'] > 0 ) {
             $qs = http_build_query([
                 "nCdEmpresa"=>"",
@@ -183,16 +184,21 @@ class Cart extends Model{
             ]);
 
             $xml = simplexml_load_file("http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?".$qs);
-                $results = $xml->Servicos->cServico;
-                if($results->MsgErro != ''){
+                
+            $results = $xml->Servicos->cServico;
+                
+                if ( $results->MsgErro != '' ) {
+
                     Cart::setMsgErro($results->MsgErro);
-                }else{
+
+                } else {
+
                     Cart::clearMsgError();
+
                 }
                 
                 $this->setnrdays($results->PrazoEntrega);
-            
-                
+                            
                 $this->setvlfreight(Cart::formatValueToDecimal($results->Valor));
                 
                 $this->setdeszipcode($nrzipcode);
@@ -211,6 +217,7 @@ class Cart extends Model{
     }
 
     public static function getMsgError() {
+
         $msg = (isset($_SESSION[Cart::SESSION_ERROR])) ? $_SESSION[Cart::SESSION] : "";
          
          Cart::clearMsgError();

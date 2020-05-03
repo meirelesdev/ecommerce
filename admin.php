@@ -7,9 +7,8 @@ $app->get('/admin', function(){
 	
 	User::verifyLogin();
 	
-	// $user = $_SESSION[User::SESSION];
-	// var_dump($user);
-	// exit;
+	$user = User::getFromSession();
+	
 	
 	$page = new PageAdmin();
 
