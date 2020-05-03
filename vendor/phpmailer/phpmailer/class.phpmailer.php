@@ -1210,6 +1210,7 @@ class PHPMailer
             if (!$this->preSend()) {
                 return false;
             }
+            
             return $this->postSend();
         } catch (phpmailerException $exc) {
             $this->mailHeader = '';
@@ -1327,6 +1328,7 @@ class PHPMailer
     {
         try {
             // Choose the mailer and send through it
+            
             switch ($this->Mailer) {
                 case 'sendmail':
                 case 'qmail':
@@ -1537,6 +1539,7 @@ class PHPMailer
     protected function smtpSend($header, $body)
     {
         $bad_rcpt = array();
+        
         if (!$this->smtpConnect($this->SMTPOptions)) {
             throw new phpmailerException($this->lang('smtp_connect_failed'), self::STOP_CRITICAL);
         }
@@ -1599,15 +1602,18 @@ class PHPMailer
      */
     public function smtpConnect($options = null)
     {
+        
         if (is_null($this->smtp)) {
             $this->smtp = $this->getSMTPInstance();
         }
 
+        
         //If no options are provided, use whatever is set in the instance
         if (is_null($options)) {
             $options = $this->SMTPOptions;
+            
         }
-
+        
         // Already connected?
         if ($this->smtp->connected()) {
             return true;

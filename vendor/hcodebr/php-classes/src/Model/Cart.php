@@ -207,10 +207,10 @@ class Cart extends Model{
     public static function setMsgErro($msg) {
 
         $_SESSION[Cart::SESSION_ERROR] = $msg;
+        
     }
 
     public static function getMsgError() {
-         
         $msg = (isset($_SESSION[Cart::SESSION_ERROR])) ? $_SESSION[Cart::SESSION] : "";
          
          Cart::clearMsgError();

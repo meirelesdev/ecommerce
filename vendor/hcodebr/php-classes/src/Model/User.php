@@ -172,53 +172,55 @@ class User extends Model{
             'cost'=>12
         ]);
     }
-
-    public function delete() {
-
-        $sql = new Sql();
-
-        $sql->query("CALL sp_users_delete(:iduser)", array(
-            ":iduser" => $this->getiduser()
-        ));
-
-    }
-
-    public static function getForgot($email) {
+    public static function getForgot($email, $inadmin = true) {
         
         $sql = new Sql();
         
-        $results = $sql->select("SELECT * FROM tb_persons a INNER JOIN tb_users b USING(idperson) WHERE a.desemail = :EMAIL;", array(
-            ":EMAIL"=>$email
-        ));
+        $results = $sql->select("SELECT * FROM tb_persons a 
+                            INNER JOIN tb_users b USING(idperson) 
+                            WHERE a.desemail = :EMAIL;
+                            ", [
+                             ":EMAIL"=>$email
+                            ]);
 
         if(count($results) === 0) {
             throw new \Exception("Não foi possivel recuperar a senha!");
         }else{            
+
             $data = $results[0];
 
             $resultRecover = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
-                ":iduser"=> $results[0]["iduser"],
+                ":iduser"=> $data["iduser"],
                 ":desip"=>$_SERVER["REMOTE_ADDR"]
             ));
 
-            if(count($resultRecover) === 0){                
+            if( count($resultRecover) === 0 ){                
                 throw new \Exception("Não foi possivel gerar nova senha!");
             } else{
                 $dataRecovery = $resultRecover[0];
+
                 $code = openssl_encrypt($dataRecovery['idrecovery'], 'AES-128-CBC', pack("a16", User::SECRET), 0, pack("a16", User::SECRET_IV));
-				$code = base64_encode($code);
+                
+                $code = base64_encode($code);
+                
+                if($inadmin === true){
 
                     $link = "http://local.lojahcode.com/admin/forgot/reset?code=".$code;
                 
-                    
-				$mailer = new  Mailer($data["desemail"], $data["desperson"], "Redefinir Senha!", "forgot", array(
+                } else {
+                
+                    $link = "http://local.lojahcode.com/forgot/reset?code=".$code;
+                }
+                
+                //public function __construct($toAddress, $toName, $subjec, $tplName, $data = array)                    
+				$mailer = new  Mailer($data["desemail"], $data["desperson"], "Redefinir Senha!", "forgot", [
 					"name"=>$data["desperson"],
 					"link"=>$link
-                ));
+                ]);
 
                 $mailer->send();
                 
-				return $data;
+				return $link    ;
 			}
 		}
     }
@@ -252,6 +254,16 @@ class User extends Model{
         $sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery", array(
             ":idrecovery"=>$idrecovery
         ));
+    }
+
+    public function delete() {
+
+        $sql = new Sql();
+
+        $sql->query("CALL sp_users_delete(:iduser)", array(
+            ":iduser" => $this->getiduser()
+        ));
+
     }
 
     public function setPassword($password) {

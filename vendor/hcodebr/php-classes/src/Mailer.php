@@ -6,8 +6,9 @@ use Rain\Tpl;
 
 class Mailer {
 
-    const USERNAME = "";
-    const PASSWORD = "";
+    // Nas constantes colocamos os dados do remetente e o destinatario vira de forma dinamica.
+    const USERNAME = "danielmeireles73@gmail.com";
+    const PASSWORD = "4393095-6";
     const NAME_FROM = "Daniel Curso Hcode!";
 
     private $mail;
@@ -21,6 +22,7 @@ class Mailer {
          );
 
          Tpl::configure( $config );
+
          $tpl = new Tpl;
 
          foreach($data as $key => $value) {
@@ -38,7 +40,7 @@ class Mailer {
         // 0 = off (for production use)
         // 1 = client messages
         // 2 = client and server messages
-        $this->mail->SMTPDebug = 0;
+        $this->mail->SMTPDebug = 2;
 
         //Ask for HTML-friendly debug output
         $this->mail->Debugoutput = 'html';
