@@ -143,15 +143,98 @@ $app->get("/checkout", function(){
 
 	User::verifyLogin(false);
 	
-	$address = new Address();
+	$address = new Address();	
 	$cart = Cart::getFromSession();
 	
-	$page = new Page();
+	if(isset($_GET['zipcode'])	){
+		
+		$_GET['zipcode'] = $cart->getdeszipcode();
 
+	}
+
+	if ( isset($_GET['zipcode']) ) {
+	
+		$address->loadFromCEP($_GET['zipcode']);
+		
+		$cart->setdeszipcode($_GET['zipcode']);
+
+		$cart->save();
+
+		$cart->getCalculateTotal();
+
+	}
+	if (!$address->getdescity()) $address->setdescity('');
+	if (!$address->getdesstate()) $address->setdesstate('');
+	if (!$address->getdesnumber()) $address->setdesnumber('');
+	if (!$address->getdescountry()) $address->setdescountry('');
+	if (!$address->getdeszipcode()) $address->setdeszipcode('');
+	if (!$address->getdesaddress()) $address->setdesaddress('');
+	if (!$address->getdesdistrict()) $address->setdesdistrict('');
+	if (!$address->getdescomplement()) $address->setdescomplement('');
+	
+	$page = new Page();
+	
 	$page->setTpl("checkout", [
 		'cart'=>$cart->getValues(),
-		'address'=>$address->getValues()
+		'address'=>$address->getValues(),
+		'products'=>$cart->getProducts(),
+		'error'=>Address::getMsgError()
 	]);
+
+});
+
+$app->post("/checkout", function() {
+	
+	User::verifyLogin(false);
+	
+	if(!isset($_POST['zipcode']) || $_POST['zipcode'] === '') {
+		
+		Address::setMsgError("Faltou informe o CEP.");
+		
+		header("Location: /checkout");
+		exit;
+	}
+	if(!isset($_POST['desaddress']) || $_POST['desaddress'] === '') {
+		
+		Address::setMsgError("Faltou informe o Endereço.");
+		
+		header("Location: /checkout");
+		exit;
+	}
+	if(!isset($_POST['desdistrict']) || $_POST['desdistrict'] === '') {
+		
+		Address::setMsgError("Faltou informe o Bairro.");
+		
+		header("Location: /checkout");
+		exit;
+	}
+	if(!isset($_POST['descity']) || $_POST['descity'] === '') {
+		
+		Address::setMsgError("Faltou informe a Cidade.");
+		
+		header("Location: /checkout");
+		exit;
+	}
+	if(!isset($_POST['descomplement']) || $_POST['descomplement'] === '') {
+		
+		Address::setMsgError("Faltou informe o numero.");
+		
+		header("Location: /checkout");
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	$address = new Address();
+
+	$_POST['deszipcode'] = $_POST['zipcode'];
+	$_POST['idperson'] = $user->getidperson();
+
+	$address->setData($_POST);
+	$address->save();
+
+	header("Location: /order");
+	exit;
 
 });
 
@@ -365,26 +448,3 @@ $app->post("/profile", function(){
 });
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
