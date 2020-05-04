@@ -1,9 +1,7 @@
 <?php
 
-
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
-
 
 // Rota para listar todos os usuarios
 $app->get("/admin/users", function() {

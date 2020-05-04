@@ -1,8 +1,10 @@
 <?php
 
+
+
 use \Hcode\PageAdmin;
-use \Hcode\Model\User;
 use \Hcode\Model\Product;
+use \Hcode\Model\User;
 
 // Rota para listar todos os Produtos
 $app->get("/admin/products", function() {

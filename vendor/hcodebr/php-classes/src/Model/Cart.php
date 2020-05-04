@@ -11,16 +11,16 @@ class Cart extends Model{
 
     const SESSION = "idCart";
     const SESSION_ERROR = 'CartError';
-    public static function getFromSession(){
+
+    public static function getFromSession() {
 
         $cart = new Cart();
         
         
 
-        if(isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0){
+        if(isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idCart'] > 0){
 
-            $cart->get((int)$_SESSION[Cart::SESSION]['idcart']);
-            echo "Jatem carrinho...";
+            $cart->get((int)$_SESSION[Cart::SESSION]['idCart']);
             
         } else {
                 
@@ -218,7 +218,7 @@ class Cart extends Model{
 
     public static function getMsgError() {
 
-        $msg = (isset($_SESSION[Cart::SESSION_ERROR])) ? $_SESSION[Cart::SESSION] : "";
+        $msg = (isset($_SESSION[Cart::SESSION_ERROR])) ? $_SESSION[Cart::SESSION_ERROR] : "";
          
          Cart::clearMsgError();
          
@@ -274,7 +274,7 @@ class Cart extends Model{
         $this->updateFreight();
         
         $totals = $this->getProductsTotals();
-
+        
         $this->setvlsubtotal($totals['vlprice']);
 
         $this->setvltotal($totals['vlprice'] + $this->getvlfreight());

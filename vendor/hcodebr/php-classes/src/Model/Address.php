@@ -62,8 +62,10 @@ class Address extends Model{
             ":desdistrict"=>$this->getdesdistrict()
         ]);
 
+        
         if( count($results) > 0 ) {
             $this->setData($results[0]);
+            
         }
 
     }
