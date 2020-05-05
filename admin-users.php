@@ -7,12 +7,40 @@ use \Hcode\Model\User;
 $app->get("/admin/users", function() {
 	// Verifica se o usuario que chamou a rota esta logado
 	User::verifyLogin();
-	// faz um select nos usuarios e retorna
-	$users = User::listAll();	
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : '';
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1 ;
+
+	if($search != '') {
+		$pagination = User::getPageSearch($search, $page);
+	} else {
+
+		$pagination = User::getPage();
+	}
+	
+
+	$pages = [];
+	
+	for ( $x = 0 ; $x < $pagination['pages']; $x++ ){
+		
+		array_push($pages, [
+			'href'=>'/admin/users?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+			]);
+
+	}
+
 	$page = new PageAdmin();
+	
 	// Carrega o template users enviando a lista com todos os usuarios
 	$page->setTpl("users", [
-		"users"=>$users
+		"users"=>$pagination['data'],
+		'search'=>$search,
+		'pages'=>$pages
 	]);
 
 });
