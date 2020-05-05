@@ -12,6 +12,11 @@ class OrderStatus extends Model {
     const EM_ABERTO = 1;
     const AGUARDANDO_PAGAMENTO = 2;
     
+    public static function listAll() {
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM tb_ordersstatus ORDER BY desstatus");
+    }
 }
 
 ?>
