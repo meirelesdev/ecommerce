@@ -10,14 +10,40 @@ use \Hcode\Model\User;
 $app->get("/admin/products", function() {
 	// Verifica se o usuario que chamou a rota esta logado
 	User::verifyLogin();
-	// faz um select nos produtos e retorna
-	$products = Product::listAll();	
 	
-	$page = new PageAdmin();
+	$search = (isset($_GET['search'])) ? $_GET['search'] : '';
 
-	// Carrega o template products enviando a lista com todos os produtos
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1 ;
+
+	if($search != '') {
+		$pagination = Product::getPageSearch($search, $page);
+	} else {
+
+		$pagination = Product::getPage();
+	}
+	
+
+	$pages = [];
+	
+	for ( $x = 0 ; $x < $pagination['pages']; $x++ ){
+		
+		array_push($pages, [
+			'href'=>'/admin/products?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+			]);
+
+	}
+
+	$page = new PageAdmin();
+	
+	// Carrega o template users enviando a lista com todos os usuarios
 	$page->setTpl("products", [
-		"products"=>$products
+		"products"=>$pagination['data'],
+		'search'=>$search,
+		'pages'=>$pages
 	]);
 
 });
