@@ -17,8 +17,7 @@
     <div class="container">
         <div class="row">                
             <div class="col-md-3">
-                <?php require $this->checkTemplate("profile-menu");?>
-
+                <?php require $this->checkTemplate("profile-menu");?> 
             </div>
             <div class="col-md-9">
                 <?php if( $profileMsg != '' ){ ?>

@@ -1,11 +1,9 @@
 <?php
 
-
-
 use \Hcode\Page;
 use \Hcode\Model\User;
-
-
+use \Hcode\Model\Order;
+use \Hcode\Model\Cart;
 
 $app->get("/login", function(){
 
@@ -87,8 +85,7 @@ $app->post('/register', function() {
             'despassword'=>$_POST['password'],
             'nrphone'=>$_POST['phone']
         ]);
-        // print_r($user);
-        // exit;
+        
         $user->save();
 
         User::login($_POST['email'], $_POST['password']);
@@ -162,4 +159,40 @@ $app->post("/profile", function(){
 	exit;
 });
 
+$app->get("/profile/orders", function(){
+    
+    User::verifyLogin(false);
+
+    $user = User::getFromSession();
+    
+    $page = new Page();
+    
+    $page->setTpl("profile-orders", [
+		'orders'=>$user->getOrders()		
+	]);
+});
+$app->get("/profile/orders/:idorder", function($idorder){
+    
+    User::verifyLogin(false);
+    
+    $user = new User();
+    $user = User::getFromSession();
+    
+    $order = new Order();
+    $order->get((int)$idorder);
+    
+    
+    $cart = new Cart();
+    
+    $cart->get((int)$order->getidcart());
+
+
+    $page = new Page();
+    
+    $page->setTpl("profile-orders-detail", [
+        'order'=>$order->getValues(),
+        'cart'=>$cart->getValues(),
+        'products'=>$cart->getProducts()
+	]);
+});
 ?>
