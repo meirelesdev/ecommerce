@@ -4,6 +4,55 @@ use \Hcode\PageAdmin;
 use \Hcode\Model\User;
 
 // Rota para listar todos os usuarios
+$app->get("/admin/users/:iduser/password", function($iduser){
+	
+	User::verifyLogin();
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	$page = new PageAdmin();
+
+	$page->setTpl('users-password',[
+		'msgError'=>User::getError(),
+		'msgSuccess'=>User::getSuccess(),
+		'user'=>$user->getValues()
+		]);
+});
+$app->post("/admin/users/:iduser/password", function($iduser){
+	
+	User::verifyLogin();
+
+	if ( !isset($_POST['despassword']) || $_POST['despassword'] === '' ) {
+		User::setError("Preencha a nova senha.");
+		header("Location: /admin/users/$iduser/password");
+		exit;
+	}
+
+	if ( !isset($_POST['despassword-confirm']) || $_POST['despassword-confirm'] === '') {
+		User::setError("Confirme a sua Nova Senha.");
+		header("Location: /admin/users/$iduser/password");
+		exit;
+	}
+
+	if ( $_POST['despassword'] !== $_POST['despassword-confirm']) {
+		User::setError("Os campos Nova senha e confirmar senha estão diferentes.");
+		header("Location: /admin/users/$iduser/password");
+		exit;
+	}
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+	$user->setPassword($_POST['despassword']);
+
+	User::setSuccess("Senha alterada com sucesso.");
+	header("Location: /admin/users/$iduser/password");
+	exit;	
+});
+
+
 $app->get("/admin/users", function() {
 	// Verifica se o usuario que chamou a rota esta logado
 	User::verifyLogin();
